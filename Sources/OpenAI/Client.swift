@@ -852,6 +852,17 @@ extension Client.Error: CustomDebugStringConvertible {
     }
 }
 
+// MARK: - LocalizedError
+
+extension Client.Error: LocalizedError {
+    public var errorDescription: String? {
+        return message
+    }
+
+    public var failureReason: String? {
+        return param
+    }
+}
 
 // MARK: -
 
