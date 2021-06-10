@@ -14,7 +14,7 @@ final class OpenAITests: XCTestCase {
         if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] {
             self.client = Client(apiKey: apiKey)
         } else {
-            var configuration = URLSessionConfiguration.ephemeral
+            let configuration = URLSessionConfiguration.ephemeral
             configuration.protocolClasses = [MockOpenAIURLProtocol.self]
             let session = Session(configuration: configuration)
             self.client = Client(session: session)
