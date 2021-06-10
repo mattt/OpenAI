@@ -1,20 +1,24 @@
 import XCTest
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+
 @testable import OpenAI
+import Alamofire
 
 final class OpenAITests: XCTestCase {
     var client: Client!
 
     override func setUpWithError() throws {
-        guard let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] else {
-            let message = """
-            Missing OpenAI api key.
-            Set the OPENAI_API_KEY environment variable when running the XCTest suite
-            to run unit tests.
-            """
-            throw XCTSkip(message)
+        if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] {
+            self.client = Client(apiKey: apiKey)
+        } else {
+            var configuration = URLSessionConfiguration.ephemeral
+            configuration.protocolClasses = [MockOpenAIURLProtocol.self]
+            let session = Session(configuration: configuration)
+            self.client = Client(session: session)
         }
-
-        self.client = Client(apiKey: apiKey)
     }
 
     func testEngines() {
@@ -73,7 +77,6 @@ final class OpenAITests: XCTestCase {
 
         Directions:
         """
-
 
         client.completions(engine: .davinci, prompt: prompt, numberOfTokens: ...20, numberOfCompletions: 1) { result in
             expectation.fulfill()

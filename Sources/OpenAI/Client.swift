@@ -48,6 +48,10 @@ public final class Client {
         self.session = Session(interceptor: adaptor)
     }
 
+    init(session: Session) {
+        self.session = session
+    }
+
     // MARK: Engines
 
     /**
