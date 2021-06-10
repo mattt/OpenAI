@@ -5,7 +5,7 @@ import AnyCodable
 /**
  A client for interacting with the OpenAI API.
  */
-public struct Client {
+public final class Client {
     /**
      An error returned by the OpenAI API.
      */
