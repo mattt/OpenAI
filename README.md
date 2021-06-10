@@ -4,6 +4,7 @@ A Swift client for the [OpenAI API](https://beta.openai.com/).
 
 ## Requirements
 
+- Swift 5.3+
 - An OpenAI API Key
 
 ## Example Usage
@@ -105,6 +106,27 @@ client.answer(engine: .curie,
     response.answers.first // "puppy A."
 }
 ```
+
+### Swift Package Manager
+
+Add the OpenAI package to your target dependencies in `Package.swift`:
+
+```swift
+// swift-tools-version:5.3
+import PackageDescription
+
+let package = Package(
+  name: "YourProject",
+  dependencies: [
+    .package(
+        url: "https://github.com/mattt/OpenAI",
+        from: "0.1.0"
+    ),
+  ]
+)
+```
+
+Then run the `swift build` command to build your project.
 
 ## License
 
