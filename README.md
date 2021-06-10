@@ -1,5 +1,8 @@
 # OpenAI
 
+![CI][ci badge]
+[![Documentation][documentation badge]][documentation]
+
 A Swift client for the [OpenAI API](https://beta.openai.com/).
 
 ## Requirements
@@ -135,3 +138,7 @@ MIT
 ## Contact
 
 Mattt ([@mattt](https://twitter.com/mattt))
+
+[ci badge]: https://github.com/mattt/OpenAI/workflows/CI/badge.svg
+[documentation badge]: https://github.com/mattt/OpenAI/workflows/Documentation/badge.svg
+[documentation]: https://github.com/mattt/OpenAI/wiki
