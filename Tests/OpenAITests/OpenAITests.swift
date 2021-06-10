@@ -11,7 +11,9 @@ final class OpenAITests: XCTestCase {
     var client: Client!
 
     override func setUpWithError() throws {
-        if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] {
+        if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"]?.trimmingCharacters(in: .whitespacesAndNewlines),
+           !apiKey.isEmpty
+        {
             self.client = Client(apiKey: apiKey)
         } else {
             let configuration = URLSessionConfiguration.ephemeral
