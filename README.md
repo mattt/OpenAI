@@ -22,7 +22,10 @@ let client = Client(apiKey: apiKey)
 
 let prompt = "Once upon a time"
 
-client.completions(engine: .davinci, prompt: prompt, numberOfTokens: ...5, numberOfCompletions: 1) { result in
+client.completions(engine: .davinci, 
+                   prompt: prompt, 
+                   numberOfTokens: ...5, 
+                   numberOfCompletions: 1) { result in
     guard case .success(let completions) = result else { return }
     
     completions.first?.choices.first?.text // " there was a girl who"
@@ -45,7 +48,9 @@ let documents: [String] = [
 
 let query = "president"
 
-client.search(engine: .davinci, documents: documents, query: query) { result in
+client.search(engine: .davinci, 
+              documents: documents, 
+              query: query) { result in
     guard case .success(let searchResults) = result else { return }
     searchResults.max()?.document // 0 (for "White House")
 }
@@ -69,7 +74,11 @@ let examples: [(String, label: String)] = [
 
 let labels = ["Positive", "Negative", "Neutral"]
 
-client.classify(engine: .curie, query: query, examples: examples, labels: labels, searchEngine: .ada) { result in
+client.classify(engine: .curie, 
+                query: query, 
+                examples: examples, 
+                labels: labels, 
+                searchEngine: .ada) { result in
     guard case .success(let classification) = result else { return }
     
     classification.label // "Negative"
