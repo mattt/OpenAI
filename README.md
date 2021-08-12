@@ -265,7 +265,7 @@ let package = Package(
   dependencies: [
     .package(
         url: "https://github.com/mattt/OpenAI",
-        from: "0.1.0"
+        from: "0.1.1"
     ),
   ]
 )
