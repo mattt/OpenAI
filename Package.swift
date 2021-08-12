@@ -6,7 +6,10 @@ import PackageDescription
 let package = Package(
     name: "OpenAI",
     platforms: [
-        .macOS(.v10_13)
+        .macOS(.v10_13),
+        .iOS(.v10),
+        .tvOS(.v10),
+        .watchOS(.v3)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
