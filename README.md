@@ -135,25 +135,25 @@ client.answer(engine: .curie,
 ```swift
 import OpenAI
 
+let apiKey: String // required
+let client = Client(apiKey: apiKey)
+
 let prompt = #"""
 // Translate this function from Swift into Objective-C
 // Swift
 
 let numbers = [Int](1...10)
-let sumOfEvens = numbers.filter { $0 % 2 == 0 }.reduce(0, +)
+let evens = numbers.filter { $0 % 2 == 0 }
+let sumOfEvens = evens.reduce(0, +)
 
 // Objective-C
 
 """#
-import OpenAI
-
-let apiKey: String // required
-let client = Client(apiKey: apiKey)
 
 client.completions(engine: "davinci-codex",
                    prompt: prompt,
                    sampling: .temperature(0.0),
-                   numberOfTokens: ...100,
+                   numberOfTokens: ...256,
                    numberOfCompletions: 1,
                    echo: false,
                    stop: ["//"],
@@ -166,6 +166,12 @@ client.completions(engine: "davinci-codex",
         print("\(choice.text)")
     }
 }
+// Prints the following code:
+// ```
+// NSArray *numbers = @[@1, @2, @3, @4, @5, @6, @7, @8, @9, @10];
+// NSArray *evens = [numbers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self % 2 == 0"]];
+// NSInteger sumOfEvens = [[evens valueForKeyPath:@"@sum.self"] integerValue];
+// ```
 ```
 
 ### Instruct Series
