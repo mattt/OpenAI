@@ -148,6 +148,7 @@ public final class Client {
                             numberOfCompletions: Int? = nil,
                             echo: Bool? = nil,
                             stop: [String]? = nil,
+                            user: String? = nil,
                             presencePenalty: Double? = nil,
                             frequencyPenalty: Double? = nil,
                             bestOf: Int? = nil,
@@ -156,6 +157,7 @@ public final class Client {
         var parameters: [String: Any?] = [
             "prompt": prompt,
             "max_tokens": numberOfTokens?.upperBound,
+            "user": user,
             "n": numberOfCompletions,
             "echo": echo,
             "stop": stop
