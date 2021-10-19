@@ -158,10 +158,13 @@ public final class Client {
         var parameters: [String: Any?] = [
             "prompt": prompt,
             "max_tokens": numberOfTokens?.upperBound,
-            "user": user,
             "n": numberOfCompletions,
             "echo": echo,
-            "stop": stop
+            "stop": stop,
+            "user": user,
+            "presence_penalty": presencePenalty,
+            "frequency_penalty": frequencyPenalty,
+            "best_of": bestOf
         ]
 
         switch sampling {
