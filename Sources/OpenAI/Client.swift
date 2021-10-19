@@ -120,10 +120,10 @@ public final class Client {
        - stop: Up to 4 sequences where the API will stop generating further tokens.
                The returned text will not contain the stop sequence.
        - user: A unique user identifier sometimes required by OpenAI for production.
-       - presencePenalty: Number between 0 and 1 that penalizes new tokens
+       - presencePenalty: Number between -2.0 and 2.0 that penalizes new tokens
                           based on whether they appear in the text so far.
                           Increases the model's likelihood to talk about new topics.
-       - frequencyPenalty: Number between 0 and 1 that penalizes new tokens
+       - frequencyPenalty: Number between -2.0 and 2.0 that penalizes new tokens
                            based on their existing frequency in the text so far.
                            Decreases the model's likelihood to repeat the same line verbatim.
        - bestOf: Generates a given number of completions server-side
@@ -158,10 +158,13 @@ public final class Client {
         var parameters: [String: Any?] = [
             "prompt": prompt,
             "max_tokens": numberOfTokens?.upperBound,
-            "user": user,
             "n": numberOfCompletions,
             "echo": echo,
-            "stop": stop
+            "stop": stop,
+            "user": user,
+            "presence_penalty": presencePenalty,
+            "frequency_penalty": frequencyPenalty,
+            "best_of": bestOf
         ]
 
         switch sampling {
