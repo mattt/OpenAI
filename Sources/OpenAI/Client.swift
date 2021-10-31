@@ -830,6 +830,40 @@ public final class Client {
                 }
             }
     }
+    
+    // MARK: Content Filter
+    /**
+     The filter aims to detect generated text that could be sensitive or unsafe coming from the API. It's currently in beta mode and has three ways of classifying text- as safe `0`, sensitive `1`, unsafe `2`, or error `-1`. The filter will make mistakes and we have currently built it to err on the side of caution, thus, resulting in higher false positives.
+
+     - Parameters:
+       - prompt: The prompt(s) to generate content filter request for.
+       - completion: A closure to be called once the request finishes.
+                     The closure takes a single argument, an integer, indicating the safety of the prompt.
+
+     - SeeAlso: https://beta.openai.com/docs/engines/content-filter
+     
+     - Note: Content filter requests do not cost tokens and as such `numberOfTokens` can be set to `...1`
+     */
+
+    public func contentFilter(prompt: String, completion: @escaping (Int) -> Void) {
+        completions(engine: "content-filter-alpha-c4",
+                           prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
+                           sampling: .temperature(0.0),
+                           numberOfTokens: ...1,
+                           numberOfCompletions: 1,
+                           echo: false,
+                           stop: ["<|endoftext|>[prompt]\n--\nLabel:"],
+                           presencePenalty: 0.0,
+                           frequencyPenalty: 0.0,
+                           bestOf: 1) { result in
+            guard case .success(let completions) = result else { fatalError("\(result)") }
+            
+            
+            if let text = completions.flatMap(\.choices).first?.text.trimmingCharacters(in: .whitespacesAndNewlines) {
+                completion(Int(text) ?? -1)
+            }
+        }
+    }
 }
 
 // MARK: - CustomStringConvertible

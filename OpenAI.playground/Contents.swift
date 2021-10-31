@@ -16,6 +16,23 @@ let client = OpenAI.Client(apiKey: apiKey)
 
 let prompt = "Once upon a time"
 
+client.contentFilter(prompt: prompt) { filterCode in
+    switch filterCode {
+        case 0:
+            print("Safe")
+        case 1:
+            print("Sensitive")
+            // This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.
+            
+        case 2:
+            print("Unsafe")
+            // This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
+        default:
+            print("Content Filter failure")
+    }
+}
+
+
 client.completions(engine: .davinci,
                    prompt: prompt,
                    sampling: .temperature(0.7),
