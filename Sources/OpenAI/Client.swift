@@ -842,7 +842,7 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/engines/content-filter
      
-     - Note: Content filter requests do not cost tokens and as such `numberOfTokens` can be set to `...1`
+     - Note: Content filter requests are free, and should cost 0 tokens.
      */
 
     public func contentFilter(prompt: String, completion: @escaping (Int) -> Void) {
