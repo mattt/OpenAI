@@ -1,8 +1,6 @@
 /**
  The result of a contentFilter request.
  */
-import Foundation
-
 public enum Safety: Int {
     
     /// This means that the text has been evaluated as safe.
