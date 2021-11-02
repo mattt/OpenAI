@@ -1,9 +1,10 @@
 /**
- The result of contentFilter request.
+ The result of a contentFilter request.
  */
 import Foundation
 
-public enum Safety: Int, Comparable {
+public enum Safety: Int {
+    
     /// This means that the text has been evaluated as safe.
     case safe = 0
     
@@ -19,7 +20,24 @@ public enum Safety: Int, Comparable {
 
 extension Safety: Equatable { }
 
-extension Safety: Comparable { }
+extension Safety: Comparable {
+    private static func minimum(_ lhs: Self, _ rhs: Self) -> Self {
+        switch (lhs, rhs) {
+        case (.safe, _), (_, .safe):
+            return .safe
+        case (.sensitive, _), (_, .sensitive):
+            return .sensitive
+        case (.unsafe, _), (_, .unsafe):
+            return .unsafe
+        case (.failure, _), (_, .failure):
+            return .failure
+        }
+    }
+    
+    public static func < (lhs: Safety, rhs: Safety) -> Bool {
+        return (lhs != rhs) && (lhs == Self.minimum(lhs, rhs))
+    }
+}
 
 extension Safety: Hashable { }
 
@@ -39,7 +57,7 @@ extension Safety: CustomStringConvertible {
 }
 
 extension Safety: ExpressibleByIntegerLiteral {
-    init(integerLiteral value: Int) {
+    public init(integerLiteral value: Int) {
         self.init(rawValue: value)!
     }
 }

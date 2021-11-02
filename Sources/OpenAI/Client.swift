@@ -850,7 +850,7 @@ public final class Client {
      - Note: Content filter requests are free, and should cost 0 tokens.
      */
 
-    public func contentFilter(prompt: String, completion: @escaping (Int) -> Void) {
+    public func contentFilter(prompt: String, completion: @escaping (Safety) -> Void) {
         completions(engine: "content-filter-alpha-c4",
                     prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
                     sampling: .temperature(0.0),
@@ -865,7 +865,7 @@ public final class Client {
             
             
             if let text = completions.flatMap(\.choices).first?.text.trimmingCharacters(in: .whitespacesAndNewlines) {
-                completion(Int(text) ?? -1)
+                completion(Safety(integerLiteral: Int(text) ?? 3))
             }
         }
     }
