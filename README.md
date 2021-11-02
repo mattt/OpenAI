@@ -237,7 +237,7 @@ client.contentFilter(prompt: prompt, completion: { rating in
         print("Unsafe")
         // This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
     default:
-        print("unexpected result")
+        print("Unexpected result")
     }
 })
 // Prints "Sensitive"
