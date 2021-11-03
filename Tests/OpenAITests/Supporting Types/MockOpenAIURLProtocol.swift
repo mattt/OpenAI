@@ -48,7 +48,7 @@ public final class MockOpenAIURLProtocol: URLProtocol {
 
                 """#
 
-            case ("POST", "https://api.openai.com/v1/engines/content-filter-alpha-c4/completions"):
+            case ("POST", "https://api.openai.com/v1/engines/content-filter-alpha/completions"):
                 json = #"""
                     {
                         "id": "cmpl-40AKATjmi5zugJr8nGfHTDbo7SR7G",

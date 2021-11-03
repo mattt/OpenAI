@@ -851,7 +851,7 @@ public final class Client {
      */
 
     public func filter(content: String, completion: @escaping (Result<Safety, Swift.Error>) -> Void) {
-        completions(engine: "content-filter-alpha-c4",
+        completions(engine: "content-filter-alpha",
                     prompt: "<|endoftext|>\(content)\n--\nLabel:",
                     sampling: .temperature(0.0),
                     numberOfTokens: ...1,
