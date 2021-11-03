@@ -850,9 +850,9 @@ public final class Client {
      - Note: Content filter requests are free, and should cost 0 tokens.
      */
 
-    public func contentFilter(prompt: String, completion: @escaping (Result<Safety, Swift.Error>) -> Void) {
+    public func filter(content: String, completion: @escaping (Result<Safety, Swift.Error>) -> Void) {
         completions(engine: "content-filter-alpha-c4",
-                    prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
+                    prompt: "<|endoftext|>\(content)\n--\nLabel:",
                     sampling: .temperature(0.0),
                     numberOfTokens: ...1,
                     numberOfCompletions: 1,

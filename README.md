@@ -224,24 +224,21 @@ import OpenAI
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
 
-let prompt = "I know it's an unpopular political opinion to hold, but I think that..."
+let content = "I know it's an unpopular political opinion to hold, but I think that..."
 
-client.contentFilter(prompt: prompt, completion: { rating in
-    switch rating {
+client.filter(content: content, completion: { result in
+    guard case .success(let safety) = result else { fatalError("\(result)") }
+
+    switch safety {
     case .safe:
-        print(rating) // "Safe"
+        print("The text is safe.")
     case .sensitive:
-        print(rating) // "Sensitive"
-        // This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.
+        print("This text is sensitive. This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.")
     case .unsafe:
-        print(rating) // "Unsafe"
-        // This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
-    case .failure:
-        print(rating) // "Unexpected result"
-        // This means that there was an error with the Content Filter request and it returned an unexpected token.
+        print("This text is unsafe. This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.")
     }
 })
-// Prints "Sensitive"
+// Prints "This text is sensitive. [...]"
 ```
 
 ## Installation
