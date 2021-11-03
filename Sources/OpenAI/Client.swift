@@ -836,7 +836,7 @@ public final class Client {
     /**
      The filter aims to detect generated text that could be sensitive or unsafe coming from the API. 
      It's currently in beta mode and has three ways of classifying text - 
-     as safe `0`, sensitive `1`, unsafe `2`, or error `-1`. 
+     as safe `0`, sensitive `1`, unsafe `2`, or failure `3`.
      The filter will make mistakes and we have currently built it to err on the side of caution, 
      thus, resulting in higher false positives.
 
