@@ -48,6 +48,43 @@ public final class MockOpenAIURLProtocol: URLProtocol {
 
                 """#
 
+            case ("POST", "https://api.openai.com/v1/engines/content-filter-alpha-c4/completions"):
+                json = #"""
+                    {
+                        "id": "cmpl-40AKATjmi5zugJr8nGfHTDbo7SR7G",
+                        "object": "text_completion",
+                        "created": 1635945034,
+                        "model": "toxicity-double-18",
+                        "choices": [
+                            {
+                                "text": "0",
+                                "index": 0,
+                                "logprobs": {
+                                    "tokens": [
+                                        "0"
+                                    ],
+                                    "token_logprobs": [
+                                        -0.001167275
+                                    ],
+                                    "top_logprobs": [
+                                        {
+                                            "0": -0.001167275,
+                                            "1": -8.242511,
+                                            "2": -7.0130115,
+                                            "3": -14.688963,
+                                            "5": -15.609307
+                                        }
+                                    ],
+                                    "text_offset": [
+                                        133
+                                    ]
+                                },
+                                "finish_reason": "length"
+                            }
+                        ]
+                    }
+                """#
+                
             case ("POST", "https://api.openai.com/v1/engines/davinci/completions"):
                 json = #"""
                     {
