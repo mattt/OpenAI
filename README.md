@@ -228,16 +228,17 @@ let prompt = "I know it's an unpopular political opinion to hold, but I think th
 
 client.contentFilter(prompt: prompt, completion: { rating in
     switch rating {
-    case 0:
-        print("Safe")
-    case 1:
-        print("Sensitive")
+    case .safe:
+        print(rating) // "Safe"
+    case .sensitive:
+        print(rating) // "Sensitive"
         // This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.
-    case 2:
-        print("Unsafe")
+    case .unsafe:
+        print(rating) // "Unsafe"
         // This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
-    default:
-        print("Unexpected result")
+    case .failure:
+        print(rating) // "Unexpected result"
+        // This means that there was an error with the Content Filter request and it returned an unexpected token.
     }
 })
 // Prints "Sensitive"

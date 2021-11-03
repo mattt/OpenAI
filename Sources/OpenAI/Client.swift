@@ -843,7 +843,7 @@ public final class Client {
      - Parameters:
        - prompt: The prompt(s) to generate content filter request for.
        - completion: A closure to be called once the request finishes.
-                     The closure takes a single argument, an integer, indicating the safety of the prompt.
+                     The closure takes a single argument, an enum `Safety`, indicating the safety of the prompt.
 
      - SeeAlso: https://beta.openai.com/docs/engines/content-filter
      
