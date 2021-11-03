@@ -13,19 +13,12 @@ public enum Safety: Int, Hashable {
 }
 
 extension Safety: Comparable {
-    private static func minimum(_ lhs: Self, _ rhs: Self) -> Self {
-        switch (lhs, rhs) {
-        case (.safe, _), (_, .safe):
-            return .safe
-        case (.sensitive, _), (_, .sensitive):
-            return .sensitive
-        case (.unsafe, _), (_, .unsafe):
-            return .unsafe
-        }
-    }
-    
+    /// Returns whether the a safety level is less than another.
+    ///
+    /// Safety values have the inverse ordering of their raw integer values.
+    /// That is, `.unsafe < .sensitive` and `.sensitive < .safe`.
     public static func < (lhs: Safety, rhs: Safety) -> Bool {
-        return (lhs != rhs) && (lhs == Self.minimum(lhs, rhs))
+        return lhs.rawValue > rhs.rawValue
     }
 }
 

@@ -183,4 +183,24 @@ final class OpenAITests: XCTestCase {
 
         wait(for: [expectation], timeout: 60.0)
     }
+
+    func testSafetyComparisons() {
+        XCTAssert(Safety.safe > Safety.sensitive)
+        XCTAssert(Safety.safe > Safety.unsafe)
+        XCTAssert(Safety.sensitive > Safety.unsafe)
+
+        XCTAssert(Safety.safe >= Safety.safe)
+        XCTAssert(Safety.safe >= Safety.sensitive)
+        XCTAssert(Safety.safe >= Safety.unsafe)
+        XCTAssert(Safety.sensitive >= Safety.unsafe)
+
+        XCTAssert(Safety.sensitive < Safety.safe)
+        XCTAssert(Safety.unsafe < Safety.safe)
+        XCTAssert(Safety.unsafe < Safety.sensitive)
+
+        XCTAssert(Safety.safe <= Safety.safe)
+        XCTAssert(Safety.sensitive <= Safety.safe)
+        XCTAssert(Safety.unsafe <= Safety.safe)
+        XCTAssert(Safety.unsafe <= Safety.sensitive)
+    }
 }
