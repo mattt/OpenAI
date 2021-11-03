@@ -1,8 +1,7 @@
 /**
- The result of a contentFilter request.
+ The result of a content filter request.
  */
-public enum Safety: Int {
-    
+public enum Safety: Int, Hashable {
     /// This means that the text has been evaluated as safe.
     case safe = 0
     
@@ -11,12 +10,7 @@ public enum Safety: Int {
     
     /// This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
     case unsafe = 2
-    
-    /// This means that the completion request return an unknown token and has failed.
-    case failure = 3
 }
-
-extension Safety: Equatable { }
 
 extension Safety: Comparable {
     private static func minimum(_ lhs: Self, _ rhs: Self) -> Self {
@@ -27,8 +21,6 @@ extension Safety: Comparable {
             return .sensitive
         case (.unsafe, _), (_, .unsafe):
             return .unsafe
-        case (.failure, _), (_, .failure):
-            return .failure
         }
     }
     
@@ -36,8 +28,6 @@ extension Safety: Comparable {
         return (lhs != rhs) && (lhs == Self.minimum(lhs, rhs))
     }
 }
-
-extension Safety: Hashable { }
 
 extension Safety: CustomStringConvertible {
     public var description: String {
@@ -48,8 +38,6 @@ extension Safety: CustomStringConvertible {
             return "Sensitive"
         case .unsafe:
             return "Unsafe"
-        case .failure:
-            return "Unexpected result"
         }
     }
 }
