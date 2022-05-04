@@ -65,7 +65,7 @@ public struct Engine: Hashable, Identifiable, Codable {
          */
         
         
-        //Older versions of our GPT-3 models are available as davinci, curie, babbage, and ada. These are meant to be used with our fine-tuning, search, classification, and question answering endpoints.
+        // Older versions of our GPT-3 models are available as davinci, curie, babbage, and ada. These are meant to be used with our fine-tuning, search, classification, and question answering endpoints.
         
         /**
          This model is part of our original, base GPT-3 series. We recommend using our latest GPT-3 models instead. (See above.)
