@@ -15,10 +15,10 @@ public struct Answers: Hashable {
     public let answers: [String]
 
     /// The engine used to answer the question.
-    public let engine: Engine.ID
+    public let engine: String
 
     /// The engine used for searching.
-    public let searchEngine: Engine.ID
+    public let searchEngine: String
 
     /// The documents selected for each answer.
     public let selectedDocuments: [Int: String]
@@ -49,8 +49,8 @@ extension Answers: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.completion = try container.decode(String.self, forKey: .completion)
         self.answers = try container.decode([String].self, forKey: .answers)
-        self.engine = try container.decode(Engine.ID.self, forKey: .engine)
-        self.searchEngine = try container.decode(Engine.ID.self, forKey: .searchEngine)
+        self.engine = try container.decode(String.self, forKey: .engine)
+        self.searchEngine = try container.decode(String.self, forKey: .searchEngine)
 
         let documents = try container.decode([Document].self, forKey: .selectedDocuments)
         self.selectedDocuments = Dictionary(uniqueKeysWithValues: documents.map { ($0.key, $0.text) })

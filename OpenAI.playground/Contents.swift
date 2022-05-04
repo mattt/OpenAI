@@ -14,13 +14,13 @@ let client = OpenAI.Client(apiKey: apiKey)
 
 // MARK: -
 
-let prompt = "Once upon a time"
+let prompt = "Tell me a story.\n"
 
-client.completions(engine: .davinci,
+client.completions(engine: "text-curie-001",
                    prompt: prompt,
                    sampling: .temperature(0.7),
                    numberOfTokens: ...64,
-                   numberOfCompletions: 5,
+//                   numberOfCompletions: 5,
                    echo: true,
                    stop: [".", "\n", "<|endoftext|>"],
                    presencePenalty: 0,

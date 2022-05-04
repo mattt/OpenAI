@@ -41,7 +41,7 @@ public struct Completion: Hashable, Identifiable {
     private let created: Int
 
     /// The engine used to generate the completion.
-    public let engine: Engine.ID
+    public let engine: String
 }
 
 // MARK: - Codable

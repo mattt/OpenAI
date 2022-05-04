@@ -34,10 +34,10 @@ public struct Classification: Hashable {
     public let label: String
 
     /// The engine used to perform classification.
-    public let engine: Engine.ID
+    public let engine: String
 
     /// The engine used for searching.
-    public let searchEngine: Engine.ID
+    public let searchEngine: String
 
     /// The examples selected by the model in making its classification determination.
     public let selectedExamples: [Example]

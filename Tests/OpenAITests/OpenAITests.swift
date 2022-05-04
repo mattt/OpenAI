@@ -33,10 +33,10 @@ final class OpenAITests: XCTestCase {
                 let engines = try result.get()
                 try self.add(XCTAttachment(jsonEncoded: engines))
 
-                XCTAssertNotNil(engines.first(where: { $0.id == .ada }))
-                XCTAssertNotNil(engines.first(where: { $0.id == .babbage }))
-                XCTAssertNotNil(engines.first(where: { $0.id == .curie }))
-                XCTAssertNotNil(engines.first(where: { $0.id == .davinci }))
+                XCTAssertNotNil(engines.first(where: { $0 == "ada" }))
+                XCTAssertNotNil(engines.first(where: { $0 == "babbage" }))
+                XCTAssertNotNil(engines.first(where: { $0 == "curie" }))
+                XCTAssertNotNil(engines.first(where: { $0 == "davinci" }))
             }
         }
 
@@ -46,14 +46,14 @@ final class OpenAITests: XCTestCase {
     func testEngine() {
         let expectation = XCTestExpectation()
 
-        client.engine(id: .ada) { result in
+        client.engine(id: "ada") { result in
             expectation.fulfill()
 
             do {
                 let engine = try result.get()
                 try self.add(XCTAttachment(jsonEncoded: engine))
 
-                XCTAssertEqual(engine.id, .ada)
+                XCTAssertEqual(engine, "ada")
             } catch {
                 XCTFail(error.localizedDescription)
             }
@@ -80,7 +80,7 @@ final class OpenAITests: XCTestCase {
         Directions:
         """
 
-        client.completions(engine: .davinci, prompt: prompt, numberOfTokens: ...20, numberOfCompletions: 1) { result in
+        client.completions(engine: "text-davinci-002", prompt: prompt, numberOfTokens: ...20, numberOfCompletions: 1) { result in
             expectation.fulfill()
 
             do {
@@ -107,7 +107,7 @@ final class OpenAITests: XCTestCase {
 
         let query = "president"
 
-        client.search(engine: .davinci, documents: documents, query: query) { result in
+        client.search(engine: "text-davinci-002", documents: documents, query: query) { result in
             expectation.fulfill()
 
             do {
@@ -137,7 +137,7 @@ final class OpenAITests: XCTestCase {
 
         let labels = ["Positive", "Negative", "Neutral"]
 
-        client.classify(engine: .curie, query: query, examples: examples, labels: labels, searchEngine: .ada) { result in
+        client.classify(engine: "text-curie-001", query: query, examples: examples, labels: labels, searchEngine: "text-ada-001") { result in
             expectation.fulfill()
 
             do {
@@ -168,7 +168,7 @@ final class OpenAITests: XCTestCase {
 
         let stop: [String] = ["\n", "<|endoftext|>"]
 
-        client.answer(engine: .curie, question: question, examples: examples, documents: documents, searchEngine: .ada, stop: stop) { result in
+        client.answer(engine: "text-curie-001", question: question, examples: examples, documents: documents, searchEngine: "text-ada-001", stop: stop) { result in
             expectation.fulfill()
 
             do {

@@ -68,9 +68,9 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/engines/list
      */
-    public func engines(completion: @escaping (Result<[Engine], Swift.Error>) -> Void) {
+    public func engines(completion: @escaping (Result<[String], Swift.Error>) -> Void) {
         session.request("https://api.openai.com/v1/engines", method: .get)
-            .responseDecodable(of: Response<[Engine]>.self, queue: .main) { response in
+            .responseDecodable(of: Response<[String]>.self, queue: .main) { response in
                 completion(response.result.flatMap { $0 })
             }
     }
@@ -89,11 +89,11 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/engines/retrieve
      */
-    public func engine(id: Engine.ID,
-                       completion: @escaping (Result<Engine, Swift.Error>) -> Void)
+    public func engine(id: String,
+                       completion: @escaping (Result<String, Swift.Error>) -> Void)
     {
         session.request("https://api.openai.com/v1/engines/\(id)", method: .get)
-            .responseDecodable(of: Response<Engine>.self, queue: .main) { response in
+            .responseDecodable(of: Response<String>.self, queue: .main) { response in
                 completion(response.result.flatMap { $0 })
             }
     }
@@ -142,7 +142,7 @@ public final class Client {
              because it can quickly consume your token quota.
      */
 
-    public func completions(engine id: Engine.ID,
+    public func completions(engine id: String,
                             prompt: String? = nil,
                             sampling: Sampling? = nil,
                             numberOfTokens: PartialRangeThrough<Int>? = nil,
@@ -218,7 +218,7 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/completions/create
      */
-    public func search(engine id: Engine.ID,
+    public func search(engine id: String,
                        documents: [String],
                        query: String,
                        completion: @escaping (Result<[SearchResult], Swift.Error>) -> Void)
@@ -266,7 +266,7 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/completions/create
      */
-    public func search(engine id: Engine.ID,
+    public func search(engine id: String,
                        file: String,
                        query: String,
                        numberOfDocuments: PartialRangeThrough<Int>? = nil,
@@ -336,11 +336,11 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/classifications/create
     */
-    public func classify(engine id: Engine.ID,
+    public func classify(engine id: String,
                          query: String,
                          examples: [(String, label: String)],
                          labels: [String]? = nil,
-                         searchEngine: Engine.ID? = nil,
+                         searchEngine: String? = nil,
                          temperature: Double? = nil,
                          numberOfExamples: PartialRangeThrough<Int>? = nil,
                          includeLogProbabilities: Int? = nil,
@@ -416,11 +416,11 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/classifications/create
     */
-    public func classify(engine id: Engine.ID,
+    public func classify(engine id: String,
                          query: String,
                          file: File.ID,
                          labels: [String]? = nil,
-                         searchEngine: Engine.ID? = nil,
+                         searchEngine: String? = nil,
                          temperature: Double? = nil,
                          numberOfExamples: PartialRangeThrough<Int>? = nil,
                          includingLogProbabilities logProbabilities: Int? = nil,
@@ -498,11 +498,11 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/answers/create
      */
-    public func answer(engine id: Engine.ID,
+    public func answer(engine id: String,
                        question: String,
                        examples: (context: String, [(question: String, answer: String)]),
                        documents: [String],
-                       searchEngine: Engine.ID,
+                       searchEngine: String,
                        temperature: Double? = nil,
                        stop: [String]? = nil,
                        numberOfDocuments: PartialRangeThrough<Int>? = nil,
@@ -588,11 +588,11 @@ public final class Client {
 
      - SeeAlso: https://beta.openai.com/docs/api-reference/answers/create
      */
-    public func answer(engine id: Engine.ID,
+    public func answer(engine id: String,
                        question: String,
                        examples: (context: String, [(question: String, answer: String)]),
                        file: File.ID,
-                       searchEngine: Engine.ID,
+                       searchEngine: String,
                        temperature: Double? = nil,
                        stop: [String]? = nil,
                        numberOfDocuments: PartialRangeThrough<Int>? = nil,
