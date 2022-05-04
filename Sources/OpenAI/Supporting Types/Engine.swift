@@ -19,7 +19,7 @@ public struct Engine: Hashable, Identifiable, Codable {
     /// A unique identifier for the engine.
     public enum ID: Hashable {
         
-        //In 2021, we released a set of beta GPT-3 models called the Instruct series. The 4 Instruct models, unlike our original base GPT-3 models, are optimized to follow your instructions. This means they're better at producing accurate completions for your prompts.
+        // In 2021, we released a set of beta GPT-3 models called the Instruct series. The 4 Instruct models, unlike our original base GPT-3 models, are optimized to follow your instructions. This means they're better at producing accurate completions for your prompts.
         
         /**
          Davinci is the most capable engine and can perform any task the other models can perform and often with less instruction. For applications requiring a lot of understanding of the content, like summarization for a specific audience and creative content generation, Davinci is going to produce the best results. These increased capabilities require more compute resources, so Davinci costs more per API call and is not as fast as the other engines.
@@ -96,7 +96,7 @@ public struct Engine: Hashable, Identifiable, Codable {
         case ada
         
         
-        //Codex: A set of models that can understand and generate code, including translating natural language to code. (Private Beta.)
+        // Codex: A set of models that can understand and generate code, including translating natural language to code. (Private Beta.)
         
         /**
          Most capable Codex model. Particularly good at translating natural language to code. In addition to completing code, also supports inserting completions within code.
