@@ -29,14 +29,18 @@ final class OpenAITests: XCTestCase {
         client.engines { result in
             expectation.fulfill()
 
-            XCTAssertNoThrow {
+            do {
                 let engines = try result.get()
                 try self.add(XCTAttachment(jsonEncoded: engines))
 
                 XCTAssertNotNil(engines.first(where: { $0.id == .ada }))
                 XCTAssertNotNil(engines.first(where: { $0.id == .babbage }))
+                XCTAssertNotNil(engines.first(where: { $0.id == "code-cushman-001" }))
                 XCTAssertNotNil(engines.first(where: { $0.id == .curie }))
                 XCTAssertNotNil(engines.first(where: { $0.id == .davinci }))
+                XCTAssertNil(engines.first(where: { $0.id == "invalid" }))
+            } catch {
+                XCTFail(error.localizedDescription)
             }
         }
 

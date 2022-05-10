@@ -35,6 +35,61 @@ public final class MockOpenAIURLProtocol: URLProtocol {
             switch (self.request.httpMethod, self.request.url?.absoluteString) {
             case ("GET", "https://api.openai.com/v1/engines"):
                 json = #"""
+                    {
+                      "object": "list",
+                      "data": [
+                        {
+                          "object": "engine",
+                          "id": "ada",
+                          "ready": true,
+                          "owner": "openai",
+                          "created": null,
+                          "permissions": null,
+                          "replicas": null,
+                          "max_replicas": null
+                        },
+                        {
+                          "object": "engine",
+                          "id": "babbage",
+                          "ready": true,
+                          "owner": "openai",
+                          "created": null,
+                          "permissions": null,
+                          "replicas": null,
+                          "max_replicas": null
+                        },
+                        {
+                          "object": "engine",
+                          "id": "code-cushman-001",
+                          "ready": true,
+                          "owner": "openai",
+                          "created": null,
+                          "permissions": null,
+                          "replicas": null,
+                          "max_replicas": null
+                        },
+                        {
+                          "object": "engine",
+                          "id": "curie",
+                          "ready": true,
+                          "owner": "openai",
+                          "created": null,
+                          "permissions": null,
+                          "replicas": null,
+                          "max_replicas": null
+                        },
+                        {
+                          "object": "engine",
+                          "id": "davinci",
+                          "ready": true,
+                          "owner": "openai",
+                          "created": null,
+                          "permissions": null,
+                          "replicas": null,
+                          "max_replicas": null
+                        }
+                      ]
+                    }
 
                 """#
 
