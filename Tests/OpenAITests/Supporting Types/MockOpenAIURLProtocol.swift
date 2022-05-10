@@ -96,9 +96,14 @@ public final class MockOpenAIURLProtocol: URLProtocol {
             case ("GET", "https://api.openai.com/v1/engines/ada"):
                 json = #"""
                     {
-                        "id": "ada",
-                        "owner": "openai",
-                        "ready": true
+                      "object": "engine",
+                      "id": "ada",
+                      "ready": true,
+                      "owner": "openai",
+                      "created": null,
+                      "permissions": null,
+                      "replicas": null,
+                      "max_replicas": null
                     }
 
                 """#
