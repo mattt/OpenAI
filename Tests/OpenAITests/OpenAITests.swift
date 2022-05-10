@@ -6,6 +6,7 @@ import FoundationNetworking
 
 @testable import OpenAI
 import Alamofire
+import SwiftUI
 
 final class OpenAITests: XCTestCase {
     var client: Client!
@@ -182,5 +183,49 @@ final class OpenAITests: XCTestCase {
         }
 
         wait(for: [expectation], timeout: 60.0)
+    }
+
+    func testContentFilter() {
+        let expectation = XCTestExpectation()
+
+        let content = """
+        Oh what a beautiful morning,
+        Oh what a beautiful day,
+        I've got a wonderful feeling,
+        Everything's going my way.
+        """
+
+        client.filter(content: content) { result in
+            expectation.fulfill()
+
+            do {
+                let safety = try result.get()
+                XCTAssertEqual(safety, .safe)
+            } catch {
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [expectation], timeout: 60.0)
+    }
+
+    func testSafetyComparisons() {
+        XCTAssert(Safety.safe > Safety.sensitive)
+        XCTAssert(Safety.safe > Safety.unsafe)
+        XCTAssert(Safety.sensitive > Safety.unsafe)
+
+        XCTAssert(Safety.safe >= Safety.safe)
+        XCTAssert(Safety.safe >= Safety.sensitive)
+        XCTAssert(Safety.safe >= Safety.unsafe)
+        XCTAssert(Safety.sensitive >= Safety.unsafe)
+
+        XCTAssert(Safety.sensitive < Safety.safe)
+        XCTAssert(Safety.unsafe < Safety.safe)
+        XCTAssert(Safety.unsafe < Safety.sensitive)
+
+        XCTAssert(Safety.safe <= Safety.safe)
+        XCTAssert(Safety.sensitive <= Safety.safe)
+        XCTAssert(Safety.unsafe <= Safety.safe)
+        XCTAssert(Safety.unsafe <= Safety.sensitive)
     }
 }

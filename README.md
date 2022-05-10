@@ -224,36 +224,21 @@ import OpenAI
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
 
-let prompt = "I know it's an unpopular political opinion to hold, but I think that..."
+let content = "I know it's an unpopular political opinion to hold, but I think that..."
 
-client.completions(engine: "content-filter-alpha-c4",
-                   prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
-                   sampling: .temperature(0.0),
-                   numberOfTokens: ...1,
-                   numberOfCompletions: 1,
-                   echo: false,
-                   stop: ["<|endoftext|>[prompt]\n--\nLabel:"],
-                   presencePenalty: 0.0,
-                   frequencyPenalty: 0.0,
-                   bestOf: 1) { result in
-    guard case .success(let completions) = result else { fatalError("\(result)") }
+client.filter(content: content, completion: { result in
+    guard case .success(let safety) = result else { fatalError("\(result)") }
 
-    if let text = completions.flatMap(\.choices).first?.text.trimmingCharacters(in: .whitespacesAndNewlines) {
-        switch Int(text) {
-        case 0:
-            print("Safe")
-        case 1:
-            print("Sensitive")
-            // This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.
-        case 2:
-            print("Unsafe")
-            // This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.
-        default:
-            print("unexpected token: \(text)")
-        }
+    switch safety {
+    case .safe:
+        print("The text is safe.")
+    case .sensitive:
+        print("This text is sensitive. This means that the text could be talking about a sensitive topic, something political, religious, or talking about a protected class such as race or nationality.")
+    case .unsafe:
+        print("This text is unsafe. This means that the text contains profane language, prejudiced or hateful language, something that could be NSFW, or text that portrays certain groups/people in a harmful manner.")
     }
-}
-// Prints "Sensitive"
+})
+// Prints "This text is sensitive. [...]"
 ```
 
 ## Installation
