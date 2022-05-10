@@ -135,6 +135,14 @@ client.answer(engine: .curie,
 ```swift
 import OpenAI
 
+// `Engine.ID` provides cases for the
+// `ada`, `babbage`, `curie`, and `davinci` engines.
+// You can add convenience APIs for other engines
+// by defining computed type properties in an extension.
+extension Engine.ID {
+    static var davinciCodex: Self = "code-davinci-002"
+}
+
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
 
@@ -150,7 +158,7 @@ let sumOfEvens = evens.reduce(0, +)
 
 """#
 
-client.completions(engine: "davinci-codex",
+client.completions(engine: .davinciCodex,
                    prompt: prompt,
                    sampling: .temperature(0.0),
                    numberOfTokens: ...256,
