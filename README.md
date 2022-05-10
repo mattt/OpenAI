@@ -14,8 +14,8 @@ A Swift client for the [OpenAI API](https://beta.openai.com/).
 
 ### Base Series
 
-> Our [base GPT-3 models] can understand and generate natural language. 
-> We offer four base models called `davinci`, `curie`, `babbage`, and `ada` 
+> Our [base GPT-3 models] can understand and generate natural language.
+> We offer four base models called `davinci`, `curie`, `babbage`, and `ada`
 > with different levels of power suitable for different tasks.
 
 #### Completions
@@ -28,12 +28,12 @@ let client = Client(apiKey: apiKey)
 
 let prompt = "Once upon a time"
 
-client.completions(engine: .davinci, 
-                   prompt: prompt, 
-                   numberOfTokens: ...5, 
+client.completions(engine: .davinci,
+                   prompt: prompt,
+                   numberOfTokens: ...5,
                    numberOfCompletions: 1) { result in
     guard case .success(let completions) = result else { return }
-    
+
     completions.first?.choices.first?.text // " there was a girl who"
 }
 ```
@@ -54,8 +54,8 @@ let documents: [String] = [
 
 let query = "president"
 
-client.search(engine: .davinci, 
-              documents: documents, 
+client.search(engine: .davinci,
+              documents: documents,
               query: query) { result in
     guard case .success(let searchResults) = result else { return }
     searchResults.max()?.document // 0 (for "White House")
@@ -80,13 +80,13 @@ let examples: [(String, label: String)] = [
 
 let labels = ["Positive", "Negative", "Neutral"]
 
-client.classify(engine: .curie, 
-                query: query, 
-                examples: examples, 
-                labels: labels, 
+client.classify(engine: .curie,
+                query: query,
+                examples: examples,
+                labels: labels,
                 searchEngine: .ada) { result in
     guard case .success(let classification) = result else { return }
-    
+
     classification.label // "Negative"
 }
 ```
@@ -100,7 +100,7 @@ let apiKey: String // required
 let client = Client(apiKey: apiKey)
 
 let documents: [String] = [
-    "Puppy A is happy.", 
+    "Puppy A is happy.",
     "Puppy B is sad."
 ]
 
@@ -113,27 +113,35 @@ let examples: (context: String, [(question: String, answer: String)]) = (
     ]
 )
 
-client.answer(engine: .curie, 
-              question: question, 
-              examples: examples, 
-              documents: documents, 
-              searchEngine: .ada, 
+client.answer(engine: .curie,
+              question: question,
+              examples: examples,
+              documents: documents,
+              searchEngine: .ada,
               stop: ["\n", "<|endoftext|>"]) { result in
     guard case .success(let response) = result else { return }
-    
+
     response.answers.first // "puppy A."
 }
 ```
 
 ### Codex
 
-> The [Codex] models are descendants of our base GPT-3 models 
-> that can understand and generate code. 
-> Their training data contains both natural language and 
+> The [Codex] models are descendants of our base GPT-3 models
+> that can understand and generate code.
+> Their training data contains both natural language and
 > billions of lines of public code from GitHub.
 
 ```swift
 import OpenAI
+
+// `Engine.ID` provides cases for the
+// `ada`, `babbage`, `curie`, and `davinci` engines.
+// You can add convenience APIs for other engines
+// by defining computed type properties in an extension.
+extension Engine.ID {
+    static var davinciCodex: Self = "code-davinci-002"
+}
 
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
@@ -150,7 +158,7 @@ let sumOfEvens = evens.reduce(0, +)
 
 """#
 
-client.completions(engine: "davinci-codex",
+client.completions(engine: .davinciCodex,
                    prompt: prompt,
                    sampling: .temperature(0.0),
                    numberOfTokens: ...256,
@@ -176,11 +184,11 @@ client.completions(engine: "davinci-codex",
 
 ### Instruct Series
 
-> The [Instruct] models share our base GPT-3 models’ ability to 
-> understand and generate natural language, 
-> but they’re better at understanding and following your instructions. 
-> You simply tell the model what you want it to do, 
-> and it will do its best to fulfill your instructions. 
+> The [Instruct] models share our base GPT-3 models’ ability to
+> understand and generate natural language,
+> but they’re better at understanding and following your instructions.
+> You simply tell the model what you want it to do,
+> and it will do its best to fulfill your instructions.
 
 ```swift
 import OpenAI
@@ -211,11 +219,11 @@ client.completions(engine: "davinci-instruct-beta",
 
 ### Content Filter
 
-> The [content filter] aims to detect generated text that could be 
-> sensitive or unsafe coming from the API. 
+> The [content filter] aims to detect generated text that could be
+> sensitive or unsafe coming from the API.
 > It's currently in beta mode and has three ways of classifying text —
-> as safe, sensitive, or unsafe. 
-> The filter will make mistakes and we have currently built it to 
+> as safe, sensitive, or unsafe.
+> The filter will make mistakes and we have currently built it to
 > err on the side of caution, thus, resulting in higher false positives.
 
 ```swift

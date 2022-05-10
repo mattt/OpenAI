@@ -16,7 +16,20 @@ import Foundation
  https://beta.openai.com/docs/engines
  */
 public struct Engine: Hashable, Identifiable, Codable {
-    /// A unique identifier for the engine.
+    /**
+     A unique identifier for the engine.
+
+     This enumeration provides cases for the
+     `ada`, `babbage`, `curie`, and `davinci` engines.
+     You can add convenience APIs for other engines
+     by defining computed type properties in an extension.
+
+     ```swift
+     extension Engine.ID {
+       static var babbageSearchQuery: Self = "babbage-search-query"
+     }
+     ```
+    */
     public enum ID: Hashable {
         /**
          Ada is usually the fastest model and can perform tasks like parsing text, address correction
