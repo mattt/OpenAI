@@ -20,6 +20,9 @@ A Swift client for the [OpenAI API](https://beta.openai.com/).
 > You simply tell the model what you want it to do,
 > and it will do its best to fulfill your instructions.
 
+```swift
+import OpenAI
+
 // `Engine.ID` provides cases for the
 // `ada`, `babbage`, `curie`, and `davinci` engines
 // from the Base Series.
@@ -28,9 +31,6 @@ A Swift client for the [OpenAI API](https://beta.openai.com/).
 extension Engine.ID {
     static var textDavinci002: Self = "textDavinci002"
 }
-
-```swift
-import OpenAI
 
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
