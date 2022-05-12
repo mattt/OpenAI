@@ -41,6 +41,7 @@ public struct Engine: Hashable, Identifiable, Codable {
          - Note: Any task performed by a faster model like Ada
                  can be performed by a more powerful model like Curie or Davinci
          */
+        @available(*, deprecated, message: "This is an older model of OpenAI's GPT-3, and may be deprecated in a future version of this Swift client.")
         case ada
 
         /**
@@ -50,6 +51,7 @@ public struct Engine: Hashable, Identifiable, Codable {
 
          Good at: Moderate classification, semantic search classification
          */
+        @available(*, deprecated, message: "This is an older model of OpenAI's GPT-3, and may be deprecated in a future version of this Swift client.")
         case babbage
 
         /**
@@ -59,6 +61,7 @@ public struct Engine: Hashable, Identifiable, Codable {
          Curie is also quite good at answering questions
          and performing Q&A and as a general service chatbot.
          */
+        @available(*, deprecated, message: "This is an older model of OpenAI's GPT-3, and may be deprecated in a future version of this Swift client.")
         case curie
 
         /**
@@ -78,6 +81,7 @@ public struct Engine: Hashable, Identifiable, Codable {
 
          Good at: Language translation, complex classification, text sentiment, summarization
          */
+        @available(*, deprecated, message: "This is an older model of OpenAI's GPT-3, and may be deprecated in a future version of this Swift client.")
         case davinci
 
         case other(String)

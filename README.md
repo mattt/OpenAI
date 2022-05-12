@@ -12,33 +12,46 @@ A Swift client for the [OpenAI API](https://beta.openai.com/).
 
 ## Example Usage
 
-### Base Series
+#### Completions (Instruct Series)
 
-> Our [base GPT-3 models] can understand and generate natural language.
-> We offer four base models called `davinci`, `curie`, `babbage`, and `ada`
-> with different levels of power suitable for different tasks.
-
-#### Completions
+> The [Instruct] models share our base GPT-3 models’ ability to
+> understand and generate natural language,
+> but they’re better at understanding and following your instructions.
+> You simply tell the model what you want it to do,
+> and it will do its best to fulfill your instructions.
 
 ```swift
 import OpenAI
 
+// `Engine.ID` provides cases for the
+// `ada`, `babbage`, `curie`, and `davinci` engines
+// from the Base Series.
+// You can add convenience APIs for other engines
+// by defining computed type properties in an extension.
+extension Engine.ID {
+    static var textDavinci002: Self = "text-davinci-002"
+}
+
 let apiKey: String // required
 let client = Client(apiKey: apiKey)
 
-let prompt = "Once upon a time"
+let prompt = "Tell me a story."
 
-client.completions(engine: .davinci,
+client.completions(engine: .textDavinci002, //custom Engine.ID from above
                    prompt: prompt,
-                   numberOfTokens: ...5,
+                   numberOfTokens: ...30,
                    numberOfCompletions: 1) { result in
     guard case .success(let completions) = result else { return }
 
-    completions.first?.choices.first?.text // " there was a girl who"
+    completions.first?.choices.first?.text
 }
 ```
 
-#### Searches
+#### Searches (Base Series)
+
+> Our [base GPT-3 models] can understand and generate natural language.
+> We offer four base models called `davinci`, `curie`, `babbage`, and `ada`
+> with different levels of power suitable for different tasks.
 
 ```swift
 import OpenAI
@@ -62,7 +75,7 @@ client.search(engine: .davinci,
 }
 ```
 
-#### Classifications
+#### Classifications (Base Series)
 
 ```swift
 import OpenAI
@@ -91,7 +104,7 @@ client.classify(engine: .curie,
 }
 ```
 
-#### Answers
+#### Answers (Base Series)
 
 ```swift
 import OpenAI
@@ -136,7 +149,8 @@ client.answer(engine: .curie,
 import OpenAI
 
 // `Engine.ID` provides cases for the
-// `ada`, `babbage`, `curie`, and `davinci` engines.
+// `ada`, `babbage`, `curie`, and `davinci` engines
+// from the Base Series.
 // You can add convenience APIs for other engines
 // by defining computed type properties in an extension.
 extension Engine.ID {
@@ -182,41 +196,6 @@ client.completions(engine: .davinciCodex,
 // ```
 ```
 
-### Instruct Series
-
-> The [Instruct] models share our base GPT-3 models’ ability to
-> understand and generate natural language,
-> but they’re better at understanding and following your instructions.
-> You simply tell the model what you want it to do,
-> and it will do its best to fulfill your instructions.
-
-```swift
-import OpenAI
-
-let apiKey: String // required
-let client = Client(apiKey: apiKey)
-
-let prompt = "Describe the Swift programming language in a few sentences."
-
-client.completions(engine: "davinci-instruct-beta",
-                   prompt: prompt,
-                   sampling: .temperature(0.0),
-                   numberOfTokens: ...100,
-                   numberOfCompletions: 1,
-                   stop: ["\n\n"],
-                   presencePenalty: 0.0,
-                   frequencyPenalty: 0.0,
-                   bestOf: 1) { result in
-    guard case .success(let completions) = result else { fatalError("\(result)") }
-
-    for choice in completions.flatMap(\.choices) {
-        print("\(choice.text)")
-    }
-}
-// Prints the following:
-// "Swift is a general-purpose programming language that was developed by Apple Inc. for iOS and OS X development. Swift is designed to work with Apple's Cocoa and Cocoa Touch frameworks and the large body of existing Objective-C code written for Apple products. Swift is intended to be more resilient to erroneous code (such as buffer overflow errors) and better support concurrency (such as multi-threading) than Objective-C."
-```
-
 ### Content Filter
 
 > The [content filter] aims to detect generated text that could be
@@ -234,7 +213,7 @@ let client = Client(apiKey: apiKey)
 
 let prompt = "I know it's an unpopular political opinion to hold, but I think that..."
 
-client.completions(engine: "content-filter-alpha-c4",
+client.completions(engine: "content-filter-alpha",
                    prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
                    sampling: .temperature(0.0),
                    numberOfTokens: ...1,
