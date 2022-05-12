@@ -14,22 +14,26 @@ let client = OpenAI.Client(apiKey: apiKey)
 
 // MARK: -
 
-let prompt = "Once upon a time"
+extension Engine.ID {
+    static var textDavinci002: Self = "text-davinci-002"
+}
 
-client.completions(engine: .davinci,
+let prompt = "Write a tagline for an ice cream shop."
+
+client.completions(engine: .textDavinci002,
                    prompt: prompt,
                    sampling: .temperature(0.7),
                    numberOfTokens: ...64,
-                   numberOfCompletions: 5,
+                   numberOfCompletions: 1,
                    echo: true,
-                   stop: [".", "\n", "<|endoftext|>"],
+                   stop: ["<|endoftext|>"],
                    presencePenalty: 0,
                    frequencyPenalty: 0,
                    bestOf: 1) { result in
     guard case .success(let completions) = result else { fatalError() }
 
     for choice in completions.flatMap(\.choices) {
-        let sentence = "\(choice.text)."
+        let sentence = "\(choice.text)"
         print(sentence)
     }
 }
