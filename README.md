@@ -213,7 +213,7 @@ let client = Client(apiKey: apiKey)
 
 let prompt = "I know it's an unpopular political opinion to hold, but I think that..."
 
-client.completions(engine: "content-filter-alpha-c4",
+client.completions(engine: "content-filter-alpha",
                    prompt: "<|endoftext|>\(prompt)\n--\nLabel:",
                    sampling: .temperature(0.0),
                    numberOfTokens: ...1,
