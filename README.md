@@ -29,7 +29,7 @@ import OpenAI
 // You can add convenience APIs for other engines
 // by defining computed type properties in an extension.
 extension Engine.ID {
-    static var textDavinci002: Self = "textDavinci002"
+    static var textDavinci002: Self = "text-davinci-002"
 }
 
 let apiKey: String // required
