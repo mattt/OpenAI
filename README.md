@@ -264,6 +264,56 @@ client.completions(engine: "content-filter-alpha-c4",
 // Prints "Sensitive"
 ```
 
+### SwiftUI Usage
+
+In SwiftUI, the client must be instantiated outside of the function to avoid invalidating the session by time-out.
+
+```swift
+import SwiftUI
+import OpenAI
+
+class ViewModel: ObservableObject {
+    @Published var response: String = ""
+    
+    var client = Client(apiKey: "")
+    
+    //Client must be created outside of function to avoid time-out.
+    init() {
+        client = Client(apiKey: "YOUR-API-KEY")
+    }
+    
+    func getResponse() {
+        let prompt = "Tell me a story.\n"
+        
+        client.completions(engine: "text-curie-001",
+                           prompt: prompt,
+                           sampling: .temperature(0.82),
+                           numberOfTokens: ...64,
+                           bestOf: 1) { result in
+            switch result {
+            case .success(let completions):
+                if let response = completions.first?.choices.first?.text {
+                    self.response = response
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @StateObject var vm: ViewModel = ViewModel()
+    
+    var body: some View {
+        Text(vm.response)
+            .padding()
+            .task { vm.getResponse() }
+    }
+}
+```
+
+
 ## Installation
 
 ### Swift Package Manager
