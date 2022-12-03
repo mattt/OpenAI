@@ -1,7 +1,6 @@
 # OpenAI
 
 ![CI][ci badge]
-[![Documentation][documentation badge]][documentation]
 
 A Swift client for the [OpenAI API](https://beta.openai.com/).
 
