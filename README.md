@@ -1,7 +1,17 @@
 # OpenAI
 
 ![CI][ci badge]
-[![Documentation][documentation badge]][documentation]
+
+> **Warning**
+> This project is no longer being maintained.
+> 
+> The project was originally developed for a version of the OpenAI API
+> that was deprecated on June 3, 2022 and removed on December 3, 2022. 
+> See [the announcement][deprecation-announcement] for more information.
+>
+> The current code requires significant updates in order to 
+> work with the current OpenAI API,
+> but there are no plans to make the necessary changes at this time.
 
 A Swift client for the [OpenAI API](https://beta.openai.com/).
 
@@ -303,3 +313,5 @@ Mattt ([@mattt](https://twitter.com/mattt))
 [Codex]: https://beta.openai.com/docs/engines/codex-series-private-beta
 [Instruct]: https://beta.openai.com/docs/engines/instruct-series-beta
 [content filter]: https://beta.openai.com/docs/engines/content-filter
+
+[deprecation-announcement]: https://community.openai.com/t/answers-classification-search-endpoint-deprecation/18532
